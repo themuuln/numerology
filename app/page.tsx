@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { cyrillicValues } from "./api/data";
 
 type Props = {};
 
@@ -10,13 +11,36 @@ type State = {
   destinyNumber: number | null;
 };
 
-export default function Home(_props: Props): JSX.Element {
+export default function Home(_props: Props): any {
   const [state, setState] = useState<State>({
     dateOfBirth: "",
     fullName: "",
     lifePathNumber: null,
     destinyNumber: null,
   });
+
+  const calculateNumbers = () => {
+    const cleanedFullName = state.fullName.replace(/\s/g, "").toUpperCase();
+    let soulUrgeSum = 0;
+    let expressionSum = 0;
+
+    for (let i = 0; i < cleanedFullName.length; i++) {
+      const char = cleanedFullName[i];
+      const value = cyrillicValues[char];
+
+      if (value) {
+        soulUrgeSum += value;
+        expressionSum += value;
+      }
+    }
+  };
+
+  for (let i = 0x0410; i <= 0x044f; i++) {
+    const mongolianCyrillicChar = String.fromCharCode(i);
+    console.log(
+      `Character: ${mongolianCyrillicChar} | Unicode Code Point: ${i}`,
+    );
+  }
 
   const calculateLifePathNumber = (): void => {
     const { dateOfBirth, fullName } = state;
