@@ -1,4 +1,15 @@
-export const cyrillicValues: { [key: string]: number } = {
+export const soulUrgeNumber: { [key: string]: number } = {
+  А: 1,
+  И: 1,
+  Й: 2,
+  О: 7,
+  Ө: 8,
+  У: 4,
+  Ү: 5,
+  Э: 6,
+};
+
+export const expressionNumber: { [key: string]: number } = {
   А: 1,
   Б: 2,
   В: 3,
@@ -34,15 +45,4 @@ export const cyrillicValues: { [key: string]: number } = {
   Э: 6,
   Ю: 7,
   Я: 8,
-};
-
-export const expressionNumber: { [key: string]: number } = {
-  А: 1,
-  И: 1,
-  Й: 2,
-  О: 7,
-  Ө: 8,
-  У: 4,
-  Ү: 5,
-  Э: 6,
 };
