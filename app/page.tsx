@@ -1,50 +1,17 @@
 "use client";
 import { useState } from "react";
-import { cyrillicValues } from "./api/data";
+import { expressionLetters, soulUrgeLetters } from "./api/data";
 
 type Props = {};
 
-type State = {
-  dateOfBirth: string;
-  fullName: string;
-  lifePathNumber: number | null;
-  destinyNumber: number | null;
-};
-
 export default function Home(_props: Props): any {
-  const [state, setState] = useState<State>({
-    dateOfBirth: "",
-    fullName: "",
-    lifePathNumber: null,
-    destinyNumber: null,
-  });
-
-  const calculateNumbers = () => {
-    const cleanedFullName = state.fullName.replace(/\s/g, "").toUpperCase();
-    let soulUrgeSum = 0;
-    let expressionSum = 0;
-
-    for (let i = 0; i < cleanedFullName.length; i++) {
-      const char = cleanedFullName[i];
-      const value = cyrillicValues[char];
-
-      if (value) {
-        soulUrgeSum += value;
-        expressionSum += value;
-      }
-    }
-  };
-
-  for (let i = 0x0410; i <= 0x044f; i++) {
-    const mongolianCyrillicChar = String.fromCharCode(i);
-    console.log(
-      `Character: ${mongolianCyrillicChar} | Unicode Code Point: ${i}`,
-    );
-  }
+  const [dateOfBirth, setDateOfBirth] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
+  const [lifePathNumber, setLifePathNumber] = useState<number>(0);
+  const [expressionNumber, setExpressionNumber] = useState<number>(0);
+  const [soulUrgeNumber, setSoulUrgeNumber] = useState<number>(0);
 
   const calculateLifePathNumber = (): void => {
-    const { dateOfBirth, fullName } = state;
-
     const cleanedDateOfBirth = dateOfBirth.replace(/\D/g, "");
 
     let sum = 0;
@@ -56,36 +23,61 @@ export default function Home(_props: Props): any {
       sum = Math.floor(sum / 10) + (sum % 10);
     }
 
-    setState((prevState) => ({
-      ...prevState,
-      lifePathNumber: sum,
-    }));
+    setLifePathNumber(sum);
 
-    calculateDestinyNumber(fullName);
+    calculateExpressionNumber(fullName);
+    calculateSoulUrgeNumber(fullName);
   };
 
-  const calculateDestinyNumber = (fullName: string): void => {
-    const cleanedFullName = fullName.replace(/\s/g, "").toUpperCase();
+  const calculateExpressionNumber = (name: string): void => {
+    let expressionNumber = 0;
+    const nameWithoutSpaces = name.replace(/\s/g, "");
 
-    let sum = 0;
-    for (let i = 0; i < cleanedFullName.length; i++) {
-      const charCode = cleanedFullName.charCodeAt(i);
-      if (charCode >= 65 && charCode <= 90) {
-        sum += charCode - 64;
+    for (const char of nameWithoutSpaces) {
+      const uppercaseChar = char.toUpperCase();
+
+      if (expressionLetters.hasOwnProperty(uppercaseChar)) {
+        expressionNumber += expressionLetters[uppercaseChar];
+      }
+
+      while (
+        expressionNumber > 9 &&
+        expressionNumber !== 11 &&
+        expressionNumber !== 22 &&
+        expressionNumber !== 33
+      ) {
+        expressionNumber =
+          Math.floor(expressionNumber / 10) + (expressionNumber % 10);
       }
     }
 
-    while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
-      sum = Math.floor(sum / 10) + (sum % 10);
-    }
-
-    setState((prevState) => ({
-      ...prevState,
-      destinyNumber: sum,
-    }));
+    setExpressionNumber(expressionNumber);
   };
 
-  const { dateOfBirth, fullName, lifePathNumber, destinyNumber } = state;
+  const calculateSoulUrgeNumber = (name: string): void => {
+    let soulUrgeNumber = 0;
+    const nameWithoutSpaces = name.replace(/\s/g, "");
+
+    for (const char of nameWithoutSpaces) {
+      const uppercaseChar = char.toUpperCase();
+
+      if (soulUrgeLetters.hasOwnProperty(uppercaseChar)) {
+        soulUrgeNumber += soulUrgeLetters[uppercaseChar];
+      }
+
+      while (
+        soulUrgeNumber > 9 &&
+        soulUrgeNumber !== 11 &&
+        soulUrgeNumber !== 22 &&
+        soulUrgeNumber !== 33
+      ) {
+        soulUrgeNumber =
+          Math.floor(soulUrgeNumber / 10) + (soulUrgeNumber % 10);
+      }
+    }
+
+    setSoulUrgeNumber(soulUrgeNumber);
+  };
 
   return (
     <div className='flex flex-col items-center'>
@@ -96,39 +88,36 @@ export default function Home(_props: Props): any {
       <input
         type='text'
         value={dateOfBirth}
-        onChange={(e) =>
-          setState((prevState) => ({
-            ...prevState,
-            dateOfBirth: e.target.value,
-          }))
-        }
+        onChange={(e) => setDateOfBirth(e.target.value)}
         className='border border-gray-300 px-4 py-2 rounded-md w-64 mb-4'
       />
       <label className='text-lg'>Full Name:</label>
       <input
         type='text'
         value={fullName}
-        onChange={(e) =>
-          setState((prevState) => ({
-            ...prevState,
-            fullName: e.target.value,
-          }))
-        }
+        onChange={(e) => setFullName(e.target.value)}
         className='border border-gray-300 px-4 py-2 rounded-md w-64 mb-4'
       />
       <button
         onClick={calculateLifePathNumber}
-        className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'
+        className='bg-blue-500 hover-bg-blue-600 text-white font-bold py-2 px-4 rounded'
       >
         Calculate
       </button>
-      {lifePathNumber !== null && (
+      {lifePathNumber !== 0 && (
         <p className='text-lg mt-4'>
           Your Life Path Number is: {lifePathNumber}
         </p>
       )}
-      {destinyNumber !== null && (
-        <p className='text-lg mt-2'>Your Destiny Number is: {destinyNumber}</p>
+      {expressionNumber !== 0 && (
+        <p className='text-lg mt-2'>
+          Your Expression Number is: {expressionNumber}
+        </p>
+      )}
+      {soulUrgeNumber !== 0 && (
+        <p className='text-lg mt-2'>
+          Your Soul Urge Number is: {soulUrgeNumber}
+        </p>
       )}
     </div>
   );
