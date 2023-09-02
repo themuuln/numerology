@@ -1,6 +1,23 @@
 "use client";
 import { useState } from "react";
 import { expressionLetters, soulUrgeLetters } from "./api/data";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type Props = {};
 
@@ -80,45 +97,82 @@ export default function Home(_props: Props): any {
   };
 
   return (
-    <div className='flex flex-col items-center'>
-      <h1 className='text-3xl font-bold mb-4'>
-        Numerology Life Path Number Calculator
-      </h1>
-      <label className='text-lg'>Date of Birth:</label>
-      <input
-        type='text'
-        value={dateOfBirth}
-        onChange={(e) => setDateOfBirth(e.target.value)}
-        className='border border-gray-300 px-4 py-2 rounded-md w-64 mb-4'
-      />
-      <label className='text-lg'>Full Name:</label>
-      <input
-        type='text'
-        value={fullName}
-        onChange={(e) => setFullName(e.target.value)}
-        className='border border-gray-300 px-4 py-2 rounded-md w-64 mb-4'
-      />
-      <button
-        onClick={calculateLifePathNumber}
-        className='bg-blue-500 hover-bg-blue-600 text-white font-bold py-2 px-4 rounded'
-      >
-        Calculate
-      </button>
-      {lifePathNumber !== 0 && (
-        <p className='text-lg mt-4'>
-          Your Life Path Number is: {lifePathNumber}
-        </p>
-      )}
-      {expressionNumber !== 0 && (
-        <p className='text-lg mt-2'>
-          Your Expression Number is: {expressionNumber}
-        </p>
-      )}
-      {soulUrgeNumber !== 0 && (
-        <p className='text-lg mt-2'>
-          Your Soul Urge Number is: {soulUrgeNumber}
-        </p>
-      )}
-    </div>
+    <section className="dark:bg-[#09090b] dark:text-white text-black bg-slate-400">
+      <div className="container flex flex-col items-center justify-center min-h-screen ">
+        <Card className="w-[350px]">
+          <CardHeader>
+            <CardTitle>Numerology Calculator</CardTitle>
+            <CardDescription>
+              Calculate your numerology one-click.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form>
+              <div className="grid items-center w-full gap-4">
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name">Date of Birth:</Label>
+                  <Input
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                    id="name"
+                    type="date"
+                    placeholder="YYYY-MM-DD"
+                  />
+                </div>
+              </div>
+              <div className="grid items-center w-full gap-4">
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name">Date of Birth</Label>
+                  <Input
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    id="name"
+                    type="text"
+                    placeholder="Овог нэр"
+                  />
+                </div>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button onClick={calculateLifePathNumber}>Calculate</Button>
+          </CardFooter>
+        </Card>
+        <Accordion type="single" collapsible className="w-[500px]">
+          {lifePathNumber !== 0 && (
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                Your Life Path Number is: {lifePathNumber}
+              </AccordionTrigger>
+              <AccordionContent>
+                Yes. It adheres to the WAI-ARIA design pattern.
+              </AccordionContent>
+            </AccordionItem>
+          )}
+          {expressionNumber !== 0 && (
+            <AccordionItem value="item-2">
+              <AccordionTrigger>
+                Your Expression Number is: {expressionNumber}
+              </AccordionTrigger>
+              <AccordionContent>
+                Yes. It comes with default styles that matches the other
+                components&apos; aesthetic.
+              </AccordionContent>
+            </AccordionItem>
+          )}
+          {soulUrgeNumber !== 0 && (
+            <AccordionItem value="item-3">
+              <AccordionTrigger>
+                Your Soul Urge Number is: {soulUrgeNumber}
+              </AccordionTrigger>
+              <AccordionContent>
+                Yes. It&apos;s animated by default, but you can disable it if
+                you prefer.
+              </AccordionContent>
+            </AccordionItem>
+          )}
+        </Accordion>
+      </div>
+    </section>
   );
 }
