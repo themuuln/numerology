@@ -107,7 +107,7 @@ export default function Home(_props: Props): any {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form>
+            <form className="space-y-4">
               <div className="grid items-center w-full gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name">Date of Birth:</Label>
@@ -122,13 +122,13 @@ export default function Home(_props: Props): any {
               </div>
               <div className="grid items-center w-full gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Date of Birth</Label>
+                  <Label htmlFor="name">Full Name:</Label>
                   <Input
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     id="name"
                     type="text"
-                    placeholder="Овог нэр"
+                    placeholder="John Wick"
                   />
                 </div>
               </div>
