@@ -138,7 +138,11 @@ export default function Home(_props: Props): any {
             <Button onClick={calculateLifePathNumber}>Calculate</Button>
           </CardFooter>
         </Card>
-        <Accordion type="single" collapsible className="w-[500px]">
+        <Accordion
+          type="single"
+          collapsible
+          className="min-w-[350px] max-w-[90%]"
+        >
           {lifePathNumber !== 0 && (
             <AccordionItem value="item-1">
               <AccordionTrigger>
