@@ -115,8 +115,8 @@ export default function Home(_props: Props): any {
                     value={dateOfBirth}
                     onChange={(e) => setDateOfBirth(e.target.value)}
                     id="name"
-                    type="date"
-                    placeholder="YYYY-MM-DD"
+                    type="number"
+                    placeholder="YYYY/MM/DD"
                   />
                 </div>
               </div>
