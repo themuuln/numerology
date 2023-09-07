@@ -148,9 +148,9 @@ export default function Home(_props: Props): any {
               <AccordionTrigger>
                 Your Life Path Number is: {lifePathNumber}
               </AccordionTrigger>
-              <AccordionContent>
+              {/* <AccordionContent>
                 Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
+              </AccordionContent> */}
             </AccordionItem>
           )}
           {expressionNumber !== 0 && (
@@ -158,10 +158,10 @@ export default function Home(_props: Props): any {
               <AccordionTrigger>
                 Your Expression Number is: {expressionNumber}
               </AccordionTrigger>
-              <AccordionContent>
+              {/* <AccordionContent>
                 Yes. It comes with default styles that matches the other
                 components&apos; aesthetic.
-              </AccordionContent>
+              </AccordionContent> */}
             </AccordionItem>
           )}
           {soulUrgeNumber !== 0 && (
@@ -169,10 +169,10 @@ export default function Home(_props: Props): any {
               <AccordionTrigger>
                 Your Soul Urge Number is: {soulUrgeNumber}
               </AccordionTrigger>
-              <AccordionContent>
+              {/* <AccordionContent>
                 Yes. It&apos;s animated by default, but you can disable it if
                 you prefer.
-              </AccordionContent>
+              </AccordionContent> */}
             </AccordionItem>
           )}
         </Accordion>
